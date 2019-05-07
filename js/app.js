@@ -1,10 +1,10 @@
 var hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
 
-var firstAndPikeList = document.getElementById('1st and Pike');
-var seaTacAirportList = document.getElementById('SeaTac Airport');
-var seattleCenterList = document.getElementById('Seattle Center');
-var capitolHillList = document.getElementById('Capitol Hill');
-var alkiList = document.getElementById('Alki');
+var firstAndPikeList = document.getElementById('first');
+var seaTacAirportList = document.getElementById('second');
+var seattleCenterList = document.getElementById('third');
+var capitolHillList = document.getElementById('fourth');
+var alkiList = document.getElementById('fifth');
 
 
 function getRandomInt(min, max) {
@@ -25,19 +25,25 @@ var firstAndPike = {
     }
   },
   render: function() {
-  // create an element
-    var liEl = document.createElement('li');
-    console.log('liEl is', liEl);
-    // give the element content
-    liEl.textContent = this.hourlySales;
-    console.log('liEl with content', liEl);
-    // append the element to the dom
-    firstAndPikeList.appendChild(liEl);
+    for (var i = 0; i < hours.length; i++) {
+
+      // create an element
+      var liEl = document.createElement('li');
+      console.log('liEl is', liEl);
+      // give the element content
+      liEl.textContent = hours[i] + ': ' + this.hourlySales[i] + ' cookies';
+      console.log('liEl with content', liEl);
+      // append the element to the dom
+      firstAndPikeList.appendChild(liEl);
+    }
   }
 };
 
 firstAndPike.hourlySalesCalc();
 console.log(firstAndPike.hourlySales);
+firstAndPike.render();
+
+
 
 var seaTacAirport = {
   location: 'SeaTac Airport',
@@ -51,16 +57,25 @@ var seaTacAirport = {
     }
   },
   render: function() {
-  // create an element
-    var liEl = document.createElement('li');
-    console.log('liEl is', liEl);
-    // give the element content
-    liEl.textContent = this.hourlySales;
-    console.log('liEl with content', liEl);
-    // append the element to the dom
-    seaTacAirportList.appendChild(liEl);
+    for (var i = 0; i < hours.length; i++) {
+
+      // create an element
+      var liEl = document.createElement('li');
+      // console.log('liEl is', liEl);
+      // give the element content
+      liEl.textContent = hours[i] + ': ' + this.hourlySales[i] + ' cookies';
+      // console.log('liEl with content', liEl);
+      // append the element to the dom
+      seaTacAirportList.appendChild(liEl);
+    }
   }
 };
+
+seaTacAirport.hourlySalesCalc();
+console.log(seaTacAirport.hourlySales);
+seaTacAirport.render();
+
+
 
 var seattleCenter = {
   location: 'Seattle Center',
@@ -74,16 +89,25 @@ var seattleCenter = {
     }
   },
   render: function() {
-  // create an element
-    var liEl = document.createElement('li');
-    console.log('liEl is', liEl);
-    // give the element content
-    liEl.textContent = this.hourlySales;
-    console.log('liEl with content', liEl);
-    // append the element to the dom
-    seattleCenterList.appendChild(liEl);
+    for (var i = 0; i < hours.length; i++) {
+
+      // create an element
+      var liEl = document.createElement('li');
+      console.log('liEl is', liEl);
+      // give the element content
+      liEl.textContent = hours[i] + ': ' + this.hourlySales[i] + ' cookies';
+      console.log('liEl with content', liEl);
+      // append the element to the dom
+      seattleCenterList.appendChild(liEl);
+    }
   }
 };
+
+seattleCenter.hourlySalesCalc();
+console.log(seattleCenter.hourlySales);
+seattleCenter.render();
+
+
 
 var capitolHill = {
   location: 'Capitol Hill',
@@ -97,16 +121,24 @@ var capitolHill = {
     }
   },
   render: function() {
-  // create an element
-    var liEl = document.createElement('li');
-    console.log('liEl is', liEl);
-    // give the element content
-    liEl.textContent = this.hourlySales;
-    console.log('liEl with content', liEl);
-    // append the element to the dom
-    capitolHillList.appendChild(liEl);
+    for (var i = 0; i < hours.length; i++) {
+
+      // create an element
+      var liEl = document.createElement('li');
+      console.log('liEl is', liEl);
+      // give the element content
+      liEl.textContent = hours[i] + ': ' + this.hourlySales[i] + ' cookies';
+      console.log('liEl with content', liEl);
+      // append the element to the dom
+      capitolHillList.appendChild(liEl);
+    }
   }
 };
+
+capitolHill.hourlySalesCalc();
+console.log(capitolHill.hourlySales);
+capitolHill.render();
+
 
 var alki = {
   location: 'Alki',
@@ -120,19 +152,26 @@ var alki = {
     }
   },
   render: function() {
-  // create an element
-    var liEl = document.createElement('li');
-    console.log('liEl is', liEl);
-    // give the element content
-    liEl.textContent = this.hourlySales;
-    console.log('liEl with content', liEl);
-    // append the element to the dom
-    alkiList.appendChild(liEl);
+    for (var i = 0; i < hours.length; i++) {
+
+      // create an element
+      var liEl = document.createElement('li');
+      console.log('liEl is', liEl);
+      // give the element content
+      liEl.textContent = hours[i] + ': ' + this.hourlySales[i] + ' cookies';
+      console.log('liEl with content', liEl);
+      // append the element to the dom
+      alkiList.appendChild(liEl);
+    }
   }
 };
 
-var stores = [firstAndPike, seaTacAirport, seattleCenter, capitolHill, alki];
+alki.hourlySalesCalc();
+console.log(alki.hourlySales);
+alki.render();
 
-for (var i = 0; i < stores.length; i++) {
-  stores[i].render();
-}
+// var stores = [firstAndPike, seaTacAirport, seattleCenter, capitolHill, alki];
+
+// for (var i = 0; i < stores.length; i++) {
+//   stores[i].render();
+// }
