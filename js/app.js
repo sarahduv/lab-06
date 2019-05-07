@@ -1,222 +1,82 @@
+// This is the array of all hours
+
+var allData = [];
+
+var locationNames = [];
+
+var locationTable = document.getElementById('locationData');
+
 var hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
 
-var firstAndPikeList = document.getElementById('first');
-var seaTacAirportList = document.getElementById('second');
-var seattleCenterList = document.getElementById('third');
-var capitolHillList = document.getElementById('fourth');
-var alkiList = document.getElementById('fifth');
-
-
-function getRandomInt(min, max) {
+function getRandomInt (min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-var firstAndPike = {
-  location: '1st and Pike',
-  minCust: 23,
-  maxCust: 65,
-  averageSales: 6.3,
-  hourlySales: [],
-  hourlySalesCalc: function() {
+function allLocations(location, minCust, maxCust, averageSales) {
+  this.location = location;
+  this.minCust = minCust;
+  this.maxCust = maxCust;
+  this.averageSales = averageSales;
+  this.hourlySales = [];
+  
+  this.hourlySalesCalc = function() {
     for (var i = 0; i < hours.length; i++) {
       this.hourlySales.push(Math.ceil(getRandomInt(this.minCust, this.maxCust) * this.averageSales));
     }
-  },
-  render: function() {
-    for (var i = 0; i < hours.length; i++) {
-      // create an element
-      var liEl = document.createElement('li');
-      console.log('liEl is', liEl);
-      // give the element content
-      liEl.textContent = hours[i] + ': ' + this.hourlySales[i] + ' cookies';
-      console.log('liEl with content', liEl);
-      // append the element to the dom
-      firstAndPikeList.appendChild(liEl);
-    }
-    var totalOne = 0;
-
-    for (i = 0; i < this.hourlySales.length; i++) {
-      totalOne += this.hourlySales[i];
-    }
-
-    var totalEl = document.createElement('li');
-    console.log('totalEl is', totalEl);
-    totalEl.textContent = 'Total: ' + totalOne + ' cookies';
-    firstAndPikeList.appendChild(totalEl);
-
   }
+  this.render = function () {
+    // make a tr
+    var trEl = document.createElement('tr');
+    // create, content, append for "Name"
+    for (var i = 0; i < hourlySales.length; i++)
+    var tdEl = document.createElement('td');
+    tdEl.textContent = hourlySales[i];
+    trEl.appendChild(tdEl);
+    // append the tr to the table
+    locationData.appendChild(trEl);
+  };
+  allData.push(this);
 };
 
-firstAndPike.hourlySalesCalc();
-console.log(firstAndPike.hourlySales);
+console.log(allData);
 
-firstAndPike.render();
-
-
-
-var seaTacAirport = {
-  location: 'SeaTac Airport',
-  minCust: 3,
-  maxCust: 24,
-  averageSales: 1.2,
-  hourlySales: [],
-  hourlySalesCalc: function() {
-    for (var i = 0; i < hours.length; i++) {
-      this.hourlySales.push(Math.ceil(getRandomInt(this.minCust, this.maxCust) * this.averageSales));
-    }
-  },
-  render: function() {
-    for (var i = 0; i < hours.length; i++) {
-
-      // create an element
-      var liEl = document.createElement('li');
-      // console.log('liEl is', liEl);
-      // give the element content
-      liEl.textContent = hours[i] + ': ' + this.hourlySales[i] + ' cookies';
-      // console.log('liEl with content', liEl);
-      // append the element to the dom
-      seaTacAirportList.appendChild(liEl);
-    }
-    var totalOne = 0;
-
-    for (i = 0; i < this.hourlySales.length; i++) {
-      totalOne += this.hourlySales[i];
-    }
-
-    var totalEl = document.createElement('li');
-    console.log('totalEl is', totalEl);
-    totalEl.textContent = 'Total: ' + totalOne + ' cookies';
-    seaTacAirportList.appendChild(totalEl);
-  }
-};
-
-seaTacAirport.hourlySalesCalc();
-console.log(seaTacAirport.hourlySales);
-seaTacAirport.render();
+function makeHeaderRow() {
+  // create the row
+  var trEl = document.createElement('tr');
+  // create, content, append first cell
+  thEl = document.createElement('th');
+  thEl.textContent = '----';
+  trEl.appendChild(thEl);
+  // create, content, append first cell
+  for (var i = 0; i < hours.length; i++) {
+  thEl = document.createElement('th');
+  thEl.textContent = hours[i];
+  trEl.appendChild(thEl);
+  };
+  // append the row to the table
+  locationData.appendChild(trEl);
+}
 
 
 
-var seattleCenter = {
-  location: 'Seattle Center',
-  minCust: 11,
-  maxCust: 38,
-  averageSales: 3.7,
-  hourlySales: [],
-  hourlySalesCalc: function() {
-    for (var i = 0; i < hours.length; i++) {
-      this.hourlySales.push(Math.ceil(getRandomInt(this.minCust, this.maxCust) * this.averageSales));
-    }
-  },
-  render: function() {
-    for (var i = 0; i < hours.length; i++) {
+var pike = new allLocations('First and Pike', 23, 65, 6.3);
+var seaTac = new allLocations('SeaTac Airport', 3, 24, 3.2);
+var seattleCenter = new allLocations('Seattle Center', 11, 38, 3.7);
+var capitolHill = new allLocations('Capitol Hill', 20, 38, 2.3);
+var alki = new allLocations('Alki', 2, 16, 4.6);
 
-      // create an element
-      var liEl = document.createElement('li');
-      console.log('liEl is', liEl);
-      // give the element content
-      liEl.textContent = hours[i] + ': ' + this.hourlySales[i] + ' cookies';
-      console.log('liEl with content', liEl);
-      // append the element to the dom
-      seattleCenterList.appendChild(liEl);
-    }
-    var totalOne = 0;
 
-    for (i = 0; i < this.hourlySales.length; i++) {
-      totalOne += this.hourlySales[i];
-    }
-
-    var totalEl = document.createElement('li');
-    console.log('totalEl is', totalEl);
-    totalEl.textContent = 'Total: ' + totalOne + ' cookies';
-    seattleCenterList.appendChild(totalEl);
-  }
-};
-
+pike.hourlySalesCalc();
+console.log('Pikes hourly sales: ' + pike.hourlySales);
+seaTac.hourlySalesCalc();
+console.log('SeaTacs hourly sales: ' + seaTac.hourlySales);
 seattleCenter.hourlySalesCalc();
-console.log(seattleCenter.hourlySales);
-seattleCenter.render();
-
-
-
-var capitolHill = {
-  location: 'Capitol Hill',
-  minCust: 20,
-  maxCust: 38,
-  averageSales: 2.3,
-  hourlySales: [],
-  hourlySalesCalc: function() {
-    for (var i = 0; i < hours.length; i++) {
-      this.hourlySales.push(Math.ceil(getRandomInt(this.minCust, this.maxCust) * this.averageSales));
-    }
-  },
-  render: function() {
-    for (var i = 0; i < hours.length; i++) {
-
-      // create an element
-      var liEl = document.createElement('li');
-      console.log('liEl is', liEl);
-      // give the element content
-      liEl.textContent = hours[i] + ': ' + this.hourlySales[i] + ' cookies';
-      console.log('liEl with content', liEl);
-      // append the element to the dom
-      capitolHillList.appendChild(liEl);
-    }
-    var totalOne = 0;
-
-    for (i = 0; i < this.hourlySales.length; i++) {
-      totalOne += this.hourlySales[i];
-    }
-
-    var totalEl = document.createElement('li');
-    console.log('totalEl is', totalEl);
-    totalEl.textContent = 'Total: ' + totalOne + ' cookies';
-    capitolHillList.appendChild(totalEl);
-  }
-};
-
+console.log('Seattle Centers hourly sales: ' + seattleCenter.hourlySales);
 capitolHill.hourlySalesCalc();
-console.log(capitolHill.hourlySales);
-capitolHill.render();
-
-
-var alki = {
-  location: 'Alki',
-  minCust: 2,
-  maxCust: 16,
-  averageSales: 4.6,
-  hourlySales: [],
-  hourlySalesCalc: function() {
-    for (var i = 0; i < hours.length; i++) {
-      this.hourlySales.push(Math.ceil(getRandomInt(this.minCust, this.maxCust) * this.averageSales));
-    }
-  },
-  render: function() {
-    for (var i = 0; i < hours.length; i++) {
-
-      // create an element
-      var liEl = document.createElement('li');
-      console.log('liEl is', liEl);
-      // give the element content
-      liEl.textContent = hours[i] + ': ' + this.hourlySales[i] + ' cookies';
-      console.log('liEl with content', liEl);
-      // append the element to the dom
-      alkiList.appendChild(liEl);
-    }
-    var totalOne = 0;
-
-    for (i = 0; i < this.hourlySales.length; i++) {
-      totalOne += this.hourlySales[i];
-    }
-
-    var totalEl = document.createElement('li');
-    console.log('totalEl is', totalEl);
-    totalEl.textContent = 'Total: ' + totalOne + ' cookies';
-    alkiList.appendChild(totalEl);
-  }
-};
-
+console.log('Capitol Hills hourly sales: ' + capitolHill.hourlySales);
 alki.hourlySalesCalc();
-console.log(alki.hourlySales);
-alki.render();
+console.log('Alkis hourly sales: ' + alki.hourlySales);
+
+makeHeaderRow();
