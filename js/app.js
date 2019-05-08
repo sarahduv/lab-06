@@ -31,7 +31,7 @@ function AllLocations(location, minCust, maxCust, averageSales) {
       this.hourlySales.push(Math.ceil(getRandomInt(this.minCust, this.maxCust) * 
         this.averageSales));
     }
-  }
+  };
 
   // Render function
   this.render = function () {
@@ -48,7 +48,7 @@ function AllLocations(location, minCust, maxCust, averageSales) {
       tdEl = document.createElement('td');
       tdEl.textContent = this.hourlySales[i];
       trEl.appendChild(tdEl);
-    };
+    }
 
     // This is appending the total data for each location
     var totalLocationHourlySales = 0;
@@ -82,7 +82,7 @@ function makeHeaderRow() {
 
   // Creating the first column for the header
   var thEl = document.createElement('th');
-  thEl.textContent = '----';
+  thEl.textContent = ' ';
   trEl.appendChild(thEl);
 
   // Creating the hourly columns for the header
@@ -166,6 +166,11 @@ function handleNewForm(event) {
   makeHeaderRow();
   renderAll();
   makeFooterRow();
+
+  event.target.newlocationname.value = null;
+  event.target.mincustomer.value = null;
+  event.target.maxcustomer.value = null;
+  event.target.averagesales.value = null;
 }
 
 // Calling the header function that creates and appends the header row

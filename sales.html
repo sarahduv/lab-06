@@ -7,28 +7,27 @@
 
     <form id="newform">
         <fieldset>
-          <legend>Chat submission form</legend>
+          <legend>New Location Submission Form</legend>
     
-          <label for="newlocationname">Location Name:</label>
           <input name="newlocationname" type="text" size="20" placeholder="Location Name" required />
     
-          <label for="mincustomer">Minimum # of Customers Per Hour:</label>
-          <input name="mincustomer" type="text" size="10" placeholder="Minimum #" />
+          <input name="mincustomer" type="text" size="20" placeholder="Minimum # of Customers" required/>
     
-          <label for="maxcustomer">Maximum # of Customers Per Hour:</label>
-          <input name="maxcustomer" type="text" size="10" placeholder="Maximum #" />
-    
-          <label for="averagesales">Average # of Sales Per Hour:</label>
-          <input name="averagesales" type="text" size="10" placeholder="Average #" />
+          <input name="maxcustomer" type="text" size="20" placeholder="Maximum # of Customers" required/>
+
+          <input name="averagesales" type="text" size="20" placeholder="Average # of Sales" required/>
+
+          <br> <br>
     
           <button type="submit">Submit New Location</button>
         </fieldset>
       </form>
       
-    <h1> Salmon Cookies</h1>    
-
+    <h1> Salmon Cookie Sales</h1>   
+    
     <table id="location-data"></table>
 
+    <img src="img/salmon.png" alternate="salmon fish photo" width="550">
 
   <script type="text/javascript" src="js/app.js"></script>
 
