@@ -86,6 +86,16 @@ function makeHeaderRow() {
   locationTable.appendChild(trEl);
 }
 
+function makeFooterRow() {
+  var trEl = document.createElement('tr');
+  // create, content, append
+  tfEl = document.createElement('tfoot');
+  tfEl.textContent = 'Totals';
+  trEl.appendChild(tfEl);
+  //append the row to the table
+  locationTable.appendChild(trEl);
+}
+
 
 // New instances for the constructor
 var pike = new allLocations('First and Pike', 23, 65, 6.3);
@@ -94,6 +104,7 @@ var seattleCenter = new allLocations('Seattle Center', 11, 38, 3.7);
 var capitolHill = new allLocations('Capitol Hill', 20, 38, 2.3);
 var alki = new allLocations('Alki', 2, 16, 4.6);
 
+// Calculating totals for each hour at all locations
 
 // Calling the hourlySalesCalc for each location instance
 pike.hourlySalesCalc();
@@ -107,6 +118,14 @@ console.log('Capitol Hills hourly sales: ' + capitolHill.hourlySales);
 alki.hourlySalesCalc();
 console.log('Alkis hourly sales: ' + alki.hourlySales);
 
+var hourlyTotals = [];
+
+// Ryan - I am still working on this problem
+for (var i = 0; i < hours.length; i++) {
+  var sumHours = pike.hourlySales[i] + seaTac.hourlySales[i] + seattleCenter.hourlySales[i] + capitolHill.hourlySales[i] + alki.hourlySales[i];
+  hourlyTotals.push(sumHours);
+}
+
 
 makeHeaderRow();
 pike.render();
@@ -114,3 +133,4 @@ seaTac.render();
 seattleCenter.render();
 capitolHill.render();
 alki.render();
+makeFooterRow();
