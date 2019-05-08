@@ -24,18 +24,20 @@ function allLocations(location, minCust, maxCust, averageSales) {
   
   this.hourlySalesCalc = function() {
     for (var i = 0; i < hours.length; i++) {
-      this.hourlySales.push(Math.ceil(getRandomInt(this.minCust, this.maxCust) * this.averageSales));
+      this.hourlySales.push(Math.ceil(getRandomInt(this.minCust, this.maxCust) * 
+        this.averageSales));
     }
   }
+
   this.render = function () {
     // this is appending the hourly sales in each row
-    // make a tr
     var trEl = document.createElement('tr');
+
     // create, content, append for "Name"
     var tdEl = document.createElement('td');
     tdEl.textContent = this.location;
     trEl.appendChild(tdEl);
-    //
+    
     for (var i = 0; i < this.hourlySales.length; i++) {
       tdEl = document.createElement('td');
       tdEl.textContent = this.hourlySales[i];
@@ -43,7 +45,6 @@ function allLocations(location, minCust, maxCust, averageSales) {
     };
 
     //this is appending the total data for each location
-    //total data --> create / content / append
     var totalLocationHourlySales = 0;
 
     for (i = 0; i < this.hourlySales.length; i++) {
@@ -54,6 +55,7 @@ function allLocations(location, minCust, maxCust, averageSales) {
     console.log('totalEl is', totalEl);
     totalEl.textContent = totalLocationHourlySales;
     trEl.appendChild(totalEl);
+
     // append the tr to the table
     locationTable.appendChild(trEl);
 
@@ -63,32 +65,34 @@ function allLocations(location, minCust, maxCust, averageSales) {
   this.hourlySalesCalc();
 };
 
-
-console.log(allData);
-
-
 function makeHeaderRow() {
   // create the row
   var trEl = document.createElement('tr');
+
   // create, content, append first cell
   thEl = document.createElement('th');
   thEl.textContent = '----';
   trEl.appendChild(thEl);
+
   // create, content, append first cell
   for (var i = 0; i < hours.length; i++) {
     thEl = document.createElement('th');
     thEl.textContent = hours[i];
     trEl.appendChild(thEl);
   }
-  //create, content, append
+
+  // create, content, append
   thEl = document.createElement('th');
   thEl.textContent = 'Total';
   trEl.appendChild(thEl);
+
   // append the row to the table
   locationTable.appendChild(trEl);
 }
+
 function makeFooterRow() {
   var trEl = document.createElement('tr');
+
   // create, content, append
   tfEl = document.createElement('tfoot');
   tfEl.textContent = 'Totals';
@@ -101,6 +105,7 @@ function makeFooterRow() {
     for (var d = 0; d < allData.length; d++) {
       columnTotal += allData[d].hourlySales[i];    
     }
+
     rowTotal += columnTotal;
 
     tfEl = document.createElement('td');
@@ -116,14 +121,12 @@ function makeFooterRow() {
   locationTable.appendChild(trEl);
 }
 
-
 // New instances for the constructor
 var pike = new allLocations('First and Pike', 23, 65, 6.3);
 var seaTac = new allLocations('SeaTac Airport', 3, 24, 3.2);
 var seattleCenter = new allLocations('Seattle Center', 11, 38, 3.7);
 var capitolHill = new allLocations('Capitol Hill', 20, 38, 2.3);
 var alki = new allLocations('Alki', 2, 16, 4.6);
-
 
 // Calculating totals for each hour at all locations
 makeHeaderRow();
