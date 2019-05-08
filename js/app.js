@@ -2,8 +2,7 @@
 var allData = [];
 
 // These are var's getting the form element on sales.html, and for submitting the new form
-var newForm = document.getElementById('new-form');
-var submitNewForm = document.getElementById('submit-new-form');
+var newForm = document.getElementById('newform');
 
 // This is linking the tabular data and headers to sales.html
 var locationTable = document.getElementById('location-data');
@@ -19,7 +18,7 @@ function getRandomInt (min, max) {
 }
 
 // Constructor function
-function allLocations(location, minCust, maxCust, averageSales) {
+function AllLocations(location, minCust, maxCust, averageSales) {
   this.location = location;
   this.minCust = minCust;
   this.maxCust = maxCust;
@@ -75,14 +74,14 @@ function allLocations(location, minCust, maxCust, averageSales) {
 
   // Calling function that calculates each hours sales
   this.hourlySalesCalc();
-};
+}
 
 function makeHeaderRow() {
   // Creating the row for the header
   var trEl = document.createElement('tr');
 
   // Creating the first column for the header
-  thEl = document.createElement('th');
+  var thEl = document.createElement('th');
   thEl.textContent = '----';
   trEl.appendChild(thEl);
 
@@ -106,13 +105,13 @@ function makeHeaderRow() {
 function makeFooterRow() {
   var trEl = document.createElement('tr');
 
-  tfEl = document.createElement('tfoot');
+  var tfEl = document.createElement('tfoot');
   tfEl.textContent = 'Totals';
   trEl.appendChild(tfEl);
 
   // holds the row total value calculated below
-  var rowTotal = 0; 
-  
+  var rowTotal = 0;
+
   // Calculates the hourly sales for all locations at hour[i]
   for (var i = 0; i < hours.length; i++) {
     var columnTotal = 0;
@@ -127,7 +126,7 @@ function makeFooterRow() {
     tfEl.textContent = columnTotal;
     trEl.appendChild(tfEl);
   }
-  
+
   tfEl = document.createElement('td');
   tfEl.textContent = rowTotal;
   trEl.appendChild(tfEl);
@@ -136,30 +135,47 @@ function makeFooterRow() {
   locationTable.appendChild(trEl);
 }
 
+// Renders allData of each instance
+function renderAll () {
+  for (var i = 0; i < allData.length; i++) {
+    allData[i].render();
+  }
+}
+
 // New instances for the constructor
-var pike = new allLocations('First and Pike', 23, 65, 6.3);
-var seaTac = new allLocations('SeaTac Airport', 3, 24, 3.2);
-var seattleCenter = new allLocations('Seattle Center', 11, 38, 3.7);
-var capitolHill = new allLocations('Capitol Hill', 20, 38, 2.3);
-var alki = new allLocations('Alki', 2, 16, 4.6);
+new AllLocations('First and Pike', 23, 65, 6.3);
+new AllLocations('SeaTac Airport', 3, 24, 3.2);
+new AllLocations('Seattle Center', 11, 38, 3.7);
+new AllLocations('Capitol Hill', 20, 38, 2.3);
+new AllLocations('Alki', 2, 16, 4.6);
 
 // Event handle for submitting a new form
 function handleNewForm(event) {
   event.preventDefault();
 
-  new allLocations(event.target.new-location-name.value, event.target.min-customer.value, event.target.max-customer.value, event.target.average-sales.value);
+  var formLocation = event.target.newlocationname.value;
+  var formMinCustomer = event.target.mincustomer.value;
+  var formMaxCustomer = event.target.maxcustomer.value;
+  var formAverageSales = event.target.averagesales.value;
+
+  new AllLocations(formLocation, formMinCustomer, formMaxCustomer, formAverageSales);
+
+  // Setting the table to be empty so we do not duplicate data
+  locationTable.innerHTML = '';
+
+  makeHeaderRow();
+  renderAll();
+  makeFooterRow();
 }
 
 // Calling the header function that creates and appends the header row
 makeHeaderRow();
 
 // Renders allData of each instance
-for (var i = 0; i < allData.length; i++) {
-  allData[i].render();
-}
+renderAll();
 
 // Calling the footer function that creates and appends the footer row
 makeFooterRow();
 
-// Event listener for submitting a new form
-newForm.addEventListener('submit-new-location', handleNewForm);
+// Event listener for submitting a new form - must be called submit
+newForm.addEventListener('submit', handleNewForm);
