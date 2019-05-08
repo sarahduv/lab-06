@@ -1,222 +1,136 @@
+// This is the array of all data put through the constructor
+var allData = [];
+
+// This is linking the tabular data and headers to sales.html
+var locationTable = document.getElementById('location-data');
+
+// This is an array holding all hours the stores are open
 var hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
 
-var firstAndPikeList = document.getElementById('first');
-var seaTacAirportList = document.getElementById('second');
-var seattleCenterList = document.getElementById('third');
-var capitolHillList = document.getElementById('fourth');
-var alkiList = document.getElementById('fifth');
-
-
-function getRandomInt(min, max) {
+// This calculates a random number and is called inside the constructor
+function getRandomInt (min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-var firstAndPike = {
-  location: '1st and Pike',
-  minCust: 23,
-  maxCust: 65,
-  averageSales: 6.3,
-  hourlySales: [],
-  hourlySalesCalc: function() {
+// Constructor
+function allLocations(location, minCust, maxCust, averageSales) {
+  this.location = location;
+  this.minCust = minCust;
+  this.maxCust = maxCust;
+  this.averageSales = averageSales;
+  this.hourlySales = [];
+  
+  this.hourlySalesCalc = function() {
     for (var i = 0; i < hours.length; i++) {
       this.hourlySales.push(Math.ceil(getRandomInt(this.minCust, this.maxCust) * this.averageSales));
     }
-  },
-  render: function() {
-    for (var i = 0; i < hours.length; i++) {
-      // create an element
-      var liEl = document.createElement('li');
-      console.log('liEl is', liEl);
-      // give the element content
-      liEl.textContent = hours[i] + ': ' + this.hourlySales[i] + ' cookies';
-      console.log('liEl with content', liEl);
-      // append the element to the dom
-      firstAndPikeList.appendChild(liEl);
-    }
-    var totalOne = 0;
+  }
+  this.render = function () {
+    // this is appending the hourly sales in each row
+    // make a tr
+    var trEl = document.createElement('tr');
+    // create, content, append for "Name"
+    var tdEl = document.createElement('td');
+    tdEl.textContent = this.location;
+    trEl.appendChild(tdEl);
+    //
+    for (var i = 0; i < this.hourlySales.length; i++) {
+     tdEl = document.createElement('td');
+     tdEl.textContent = this.hourlySales[i];
+     trEl.appendChild(tdEl);
+    };
+
+    //this is appending the total data for each location
+    //total data --> create / content / append
+    var totalLocationHourlySales = 0;
 
     for (i = 0; i < this.hourlySales.length; i++) {
-      totalOne += this.hourlySales[i];
+      totalLocationHourlySales += this.hourlySales[i];
     }
 
-    var totalEl = document.createElement('li');
+    var totalEl = document.createElement('td');
     console.log('totalEl is', totalEl);
-    totalEl.textContent = 'Total: ' + totalOne + ' cookies';
-    firstAndPikeList.appendChild(totalEl);
+    totalEl.textContent = totalLocationHourlySales;
+    trEl.appendChild(totalEl);
+    // append the tr to the table
+    locationTable.appendChild(trEl);
 
-  }
+  };
+  allData.push(this);
 };
 
-firstAndPike.hourlySalesCalc();
-console.log(firstAndPike.hourlySales);
 
-firstAndPike.render();
+console.log(allData);
 
 
+function makeHeaderRow() {
+  // create the row
+  var trEl = document.createElement('tr');
+  // create, content, append first cell
+  thEl = document.createElement('th');
+  thEl.textContent = '----';
+  trEl.appendChild(thEl);
+  // create, content, append first cell
+  for (var i = 0; i < hours.length; i++) {
+  thEl = document.createElement('th');
+  thEl.textContent = hours[i];
+  trEl.appendChild(thEl);
+  };
+  //create, content, append
+  thEl = document.createElement('th');
+  thEl.textContent = 'Total';
+  trEl.appendChild(thEl);
+  // append the row to the table
+  locationTable.appendChild(trEl);
+}
 
-var seaTacAirport = {
-  location: 'SeaTac Airport',
-  minCust: 3,
-  maxCust: 24,
-  averageSales: 1.2,
-  hourlySales: [],
-  hourlySalesCalc: function() {
-    for (var i = 0; i < hours.length; i++) {
-      this.hourlySales.push(Math.ceil(getRandomInt(this.minCust, this.maxCust) * this.averageSales));
-    }
-  },
-  render: function() {
-    for (var i = 0; i < hours.length; i++) {
-
-      // create an element
-      var liEl = document.createElement('li');
-      // console.log('liEl is', liEl);
-      // give the element content
-      liEl.textContent = hours[i] + ': ' + this.hourlySales[i] + ' cookies';
-      // console.log('liEl with content', liEl);
-      // append the element to the dom
-      seaTacAirportList.appendChild(liEl);
-    }
-    var totalOne = 0;
-
-    for (i = 0; i < this.hourlySales.length; i++) {
-      totalOne += this.hourlySales[i];
-    }
-
-    var totalEl = document.createElement('li');
-    console.log('totalEl is', totalEl);
-    totalEl.textContent = 'Total: ' + totalOne + ' cookies';
-    seaTacAirportList.appendChild(totalEl);
-  }
-};
-
-seaTacAirport.hourlySalesCalc();
-console.log(seaTacAirport.hourlySales);
-seaTacAirport.render();
+function makeFooterRow() {
+  var trEl = document.createElement('tr');
+  // create, content, append
+  tfEl = document.createElement('tfoot');
+  tfEl.textContent = 'Totals';
+  trEl.appendChild(tfEl);
+  //append the row to the table
+  locationTable.appendChild(trEl);
+}
 
 
+// New instances for the constructor
+var pike = new allLocations('First and Pike', 23, 65, 6.3);
+var seaTac = new allLocations('SeaTac Airport', 3, 24, 3.2);
+var seattleCenter = new allLocations('Seattle Center', 11, 38, 3.7);
+var capitolHill = new allLocations('Capitol Hill', 20, 38, 2.3);
+var alki = new allLocations('Alki', 2, 16, 4.6);
 
-var seattleCenter = {
-  location: 'Seattle Center',
-  minCust: 11,
-  maxCust: 38,
-  averageSales: 3.7,
-  hourlySales: [],
-  hourlySalesCalc: function() {
-    for (var i = 0; i < hours.length; i++) {
-      this.hourlySales.push(Math.ceil(getRandomInt(this.minCust, this.maxCust) * this.averageSales));
-    }
-  },
-  render: function() {
-    for (var i = 0; i < hours.length; i++) {
+// Calculating totals for each hour at all locations
 
-      // create an element
-      var liEl = document.createElement('li');
-      console.log('liEl is', liEl);
-      // give the element content
-      liEl.textContent = hours[i] + ': ' + this.hourlySales[i] + ' cookies';
-      console.log('liEl with content', liEl);
-      // append the element to the dom
-      seattleCenterList.appendChild(liEl);
-    }
-    var totalOne = 0;
-
-    for (i = 0; i < this.hourlySales.length; i++) {
-      totalOne += this.hourlySales[i];
-    }
-
-    var totalEl = document.createElement('li');
-    console.log('totalEl is', totalEl);
-    totalEl.textContent = 'Total: ' + totalOne + ' cookies';
-    seattleCenterList.appendChild(totalEl);
-  }
-};
-
+// Calling the hourlySalesCalc for each location instance
+pike.hourlySalesCalc();
+console.log('Pikes hourly sales: ' + pike.hourlySales);
+seaTac.hourlySalesCalc();
+console.log('SeaTacs hourly sales: ' + seaTac.hourlySales);
 seattleCenter.hourlySalesCalc();
-console.log(seattleCenter.hourlySales);
-seattleCenter.render();
-
-
-
-var capitolHill = {
-  location: 'Capitol Hill',
-  minCust: 20,
-  maxCust: 38,
-  averageSales: 2.3,
-  hourlySales: [],
-  hourlySalesCalc: function() {
-    for (var i = 0; i < hours.length; i++) {
-      this.hourlySales.push(Math.ceil(getRandomInt(this.minCust, this.maxCust) * this.averageSales));
-    }
-  },
-  render: function() {
-    for (var i = 0; i < hours.length; i++) {
-
-      // create an element
-      var liEl = document.createElement('li');
-      console.log('liEl is', liEl);
-      // give the element content
-      liEl.textContent = hours[i] + ': ' + this.hourlySales[i] + ' cookies';
-      console.log('liEl with content', liEl);
-      // append the element to the dom
-      capitolHillList.appendChild(liEl);
-    }
-    var totalOne = 0;
-
-    for (i = 0; i < this.hourlySales.length; i++) {
-      totalOne += this.hourlySales[i];
-    }
-
-    var totalEl = document.createElement('li');
-    console.log('totalEl is', totalEl);
-    totalEl.textContent = 'Total: ' + totalOne + ' cookies';
-    capitolHillList.appendChild(totalEl);
-  }
-};
-
+console.log('Seattle Centers hourly sales: ' + seattleCenter.hourlySales);
 capitolHill.hourlySalesCalc();
-console.log(capitolHill.hourlySales);
-capitolHill.render();
-
-
-var alki = {
-  location: 'Alki',
-  minCust: 2,
-  maxCust: 16,
-  averageSales: 4.6,
-  hourlySales: [],
-  hourlySalesCalc: function() {
-    for (var i = 0; i < hours.length; i++) {
-      this.hourlySales.push(Math.ceil(getRandomInt(this.minCust, this.maxCust) * this.averageSales));
-    }
-  },
-  render: function() {
-    for (var i = 0; i < hours.length; i++) {
-
-      // create an element
-      var liEl = document.createElement('li');
-      console.log('liEl is', liEl);
-      // give the element content
-      liEl.textContent = hours[i] + ': ' + this.hourlySales[i] + ' cookies';
-      console.log('liEl with content', liEl);
-      // append the element to the dom
-      alkiList.appendChild(liEl);
-    }
-    var totalOne = 0;
-
-    for (i = 0; i < this.hourlySales.length; i++) {
-      totalOne += this.hourlySales[i];
-    }
-
-    var totalEl = document.createElement('li');
-    console.log('totalEl is', totalEl);
-    totalEl.textContent = 'Total: ' + totalOne + ' cookies';
-    alkiList.appendChild(totalEl);
-  }
-};
-
+console.log('Capitol Hills hourly sales: ' + capitolHill.hourlySales);
 alki.hourlySalesCalc();
-console.log(alki.hourlySales);
+console.log('Alkis hourly sales: ' + alki.hourlySales);
+
+var hourlyTotals = [];
+
+// Ryan - I am still working on this problem
+for (var i = 0; i < hours.length; i++) {
+  var sumHours = pike.hourlySales[i] + seaTac.hourlySales[i] + seattleCenter.hourlySales[i] + capitolHill.hourlySales[i] + alki.hourlySales[i];
+  hourlyTotals.push(sumHours);
+}
+
+
+makeHeaderRow();
+pike.render();
+seaTac.render();
+seattleCenter.render();
+capitolHill.render();
 alki.render();
+makeFooterRow();
