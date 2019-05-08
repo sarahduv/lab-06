@@ -37,9 +37,9 @@ function allLocations(location, minCust, maxCust, averageSales) {
     trEl.appendChild(tdEl);
     //
     for (var i = 0; i < this.hourlySales.length; i++) {
-     tdEl = document.createElement('td');
-     tdEl.textContent = this.hourlySales[i];
-     trEl.appendChild(tdEl);
+      tdEl = document.createElement('td');
+      tdEl.textContent = this.hourlySales[i];
+      trEl.appendChild(tdEl);
     };
 
     //this is appending the total data for each location
@@ -59,6 +59,8 @@ function allLocations(location, minCust, maxCust, averageSales) {
 
   };
   allData.push(this);
+
+  this.hourlySalesCalc();
 };
 
 
@@ -74,10 +76,10 @@ function makeHeaderRow() {
   trEl.appendChild(thEl);
   // create, content, append first cell
   for (var i = 0; i < hours.length; i++) {
-  thEl = document.createElement('th');
-  thEl.textContent = hours[i];
-  trEl.appendChild(thEl);
-  };
+    thEl = document.createElement('th');
+    thEl.textContent = hours[i];
+    trEl.appendChild(thEl);
+  }
   //create, content, append
   thEl = document.createElement('th');
   thEl.textContent = 'Total';
@@ -85,13 +87,31 @@ function makeHeaderRow() {
   // append the row to the table
   locationTable.appendChild(trEl);
 }
-
 function makeFooterRow() {
   var trEl = document.createElement('tr');
   // create, content, append
   tfEl = document.createElement('tfoot');
   tfEl.textContent = 'Totals';
   trEl.appendChild(tfEl);
+
+  var rowTotal = 0; 
+  
+  for (var i = 0; i < hours.length; i++) {
+    var columnTotal = 0;
+    for (var d = 0; d < allData.length; d++) {
+      columnTotal += allData[d].hourlySales[i];    
+    }
+    rowTotal += columnTotal;
+
+    tfEl = document.createElement('td');
+    tfEl.textContent = columnTotal;
+    trEl.appendChild(tfEl);
+  }
+  
+  tfEl = document.createElement('td');
+  tfEl.textContent = rowTotal;
+  trEl.appendChild(tfEl);
+
   //append the row to the table
   locationTable.appendChild(trEl);
 }
@@ -104,33 +124,12 @@ var seattleCenter = new allLocations('Seattle Center', 11, 38, 3.7);
 var capitolHill = new allLocations('Capitol Hill', 20, 38, 2.3);
 var alki = new allLocations('Alki', 2, 16, 4.6);
 
+
 // Calculating totals for each hour at all locations
+makeHeaderRow();
 
-// Calling the hourlySalesCalc for each location instance
-pike.hourlySalesCalc();
-console.log('Pikes hourly sales: ' + pike.hourlySales);
-seaTac.hourlySalesCalc();
-console.log('SeaTacs hourly sales: ' + seaTac.hourlySales);
-seattleCenter.hourlySalesCalc();
-console.log('Seattle Centers hourly sales: ' + seattleCenter.hourlySales);
-capitolHill.hourlySalesCalc();
-console.log('Capitol Hills hourly sales: ' + capitolHill.hourlySales);
-alki.hourlySalesCalc();
-console.log('Alkis hourly sales: ' + alki.hourlySales);
-
-var hourlyTotals = [];
-
-// Ryan - I am still working on this problem
-for (var i = 0; i < hours.length; i++) {
-  var sumHours = pike.hourlySales[i] + seaTac.hourlySales[i] + seattleCenter.hourlySales[i] + capitolHill.hourlySales[i] + alki.hourlySales[i];
-  hourlyTotals.push(sumHours);
+for (var i = 0; i < allData.length; i++) {
+  allData[i].render();
 }
 
-
-makeHeaderRow();
-pike.render();
-seaTac.render();
-seattleCenter.render();
-capitolHill.render();
-alki.render();
 makeFooterRow();
