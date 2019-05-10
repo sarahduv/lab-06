@@ -1,6 +1,6 @@
-  /* //////////////////index.html css //////////////*/
+  /* //////////////////index.html css https://s3-us-west-2.amazonaws.com/s.cdpn.io/9632/happy.png//////////////*/
   body {
-    cursor: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/9632/happy.png'), auto;	
+    cursor: url('../img/salmon2.png'), auto;	
   }
 
   .salmonCookieHeader {
